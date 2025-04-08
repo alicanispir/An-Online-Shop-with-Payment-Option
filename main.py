@@ -20,11 +20,11 @@ from datetime import datetime
 
 import stripe
 
-stripe.api_key = 'sk_test_51RBXSpQgGhAofZAqKv8KzGnKlOBBF2YhGd8rKEN57t52rmLyjyQ5wzRASenLziPbJwEXSd2ECTtgJuRzhN2TSKMe00RsJevqwA'
+stripe.api_key = 'YOUR_STRIPE_API_KEY'
 
 YOUR_DOMAIN = 'http://127.0.0.1:5001'
 
-os.environ["FLASK_KEY"] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+os.environ["FLASK_KEY"] = 'YOUR_FLASK_KEY'
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = os.environ.get("FLASK_KEY")
