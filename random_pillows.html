@@ -1,0 +1,62 @@
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('../static/assets/img/main_image.jpg')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>🎁 10 Emoji Pillows Just for You</h1>
+          <span class="subheading">Your random picks are below!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container px-4 px-lg-5 mt-4">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <ul class="list-group">
+      {% for pillow in pillows %}
+      <div class="col">
+        <div class="card h-100 text-center shadow">
+          <div class="card-body">
+            <div style="font-size: 4rem;">{{ pillow.emoji }}</div>
+            <h5 class="card-title mt-2">{{ pillow.name }}</h5>
+            <p class="card-text fw-bold text-success">{{ pillow.price }}</p>
+
+            <!-- Add to Cart Form -->
+            <form method="POST" action="{{ url_for('add_to_cart') }}">
+                <input type="hidden" name="pillow_id" value="{{ loop.index }}"> <!-- Use loop.index as ID -->
+                <button type="submit" class="btn btn-warning"
+                        {% if not current_user.is_authenticated %}
+                            onclick="alertLoginRequired()" disabled
+                        {% endif %}>
+                    🛒 Add to Cart
+                </button>
+            </form>
+            {% if not current_user.is_authenticated %}
+              <div class="alert alert-warning text-center" role="alert">
+                Please <a href="{{ url_for('login') }}">log in</a> to add emoji pillows to your cart!
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      </ul>
+
+      <div class="d-flex justify-content-center mt-4">
+        <a class="btn btn-primary" href="{{ url_for('random_pillows') }}">🎲 Shuffle Again</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function alertLoginRequired() {
+    alert("You must be logged in to add items to your cart.");
+  }
+</script>
+
+{% include "footer.html" %}

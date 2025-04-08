@@ -1,0 +1,53 @@
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('../static/assets/img/main_image.jpg')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>🛒 Your Shopping Cart</h1>
+          <span class="subheading">Review your items before checkout!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container px-4 px-lg-5 mt-4">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      {% if items %}
+        <ul class="list-group">
+          {% for item in items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>{{ item.emoji }} {{ item.name }}</span>
+              <span class="fw-bold">{{ item.price }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="d-flex justify-content-between mt-3">
+          <h5>Total: ${{ total }}</h5>
+          <form method="POST" action="{{ url_for('create_checkout_session') }}">
+            <button type="submit" class="btn btn-success">Proceed to Checkout</button>
+          </form>
+        </div>
+        <!-- Empty Cart Button -->
+        <div class="d-flex justify-content-center mt-4">
+          <form method="POST" action="{{ url_for('empty_cart') }}">
+            <button type="submit" class="btn btn-danger">Empty Cart</button>
+          </form>
+        </div>
+      {% else %}
+        <div class="alert alert-info text-center" role="alert">
+          Your cart is empty. Start shopping!
+        </div>
+        <!-- Button to return to the shopping list -->
+        <div class="d-flex justify-content-center mt-4">
+          <a class="btn btn-primary" href="{{ url_for('random_pillows') }}">Return to Shopping</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
